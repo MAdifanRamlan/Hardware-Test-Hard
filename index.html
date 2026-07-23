@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Game - Kuiz Perkakasan Komputer</title>
+
+
+<style>
+
+/* =========================
+   ASAS
+========================= */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    color: white;
+
+    background:
+
+        linear-gradient(
+            rgba(5, 10, 45, 0.75),
+            rgba(5, 10, 45, 0.75)
+        ),
+
+        url("Background_hard.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
+    text-align: center;
+
+    padding-top: 35px;
+
+}
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 48px;
+
+    font-weight: bold;
+
+}
+
+.header h1 span {
+
+    color: #ff4d4d;
+
+}
+
+
+/* =========================
+   MARKAH
+========================= */
+
+.score-box {
+
+    position: absolute;
+
+    top: 35px;
+    left: 35px;
+
+    padding: 18px 30px;
+
+    border: 1px solid #ff4d4d;
+
+    border-radius: 20px;
+
+    background: rgba(55, 8, 8, 0.88);
+
+    box-shadow: 0 0 22px rgba(255,70,70,0.35);
+
+}
+
+.score-box small {
+
+    display: block;
+
+    opacity: 0.7;
+
+}
+
+.score-box strong {
+
+    font-size: 30px;
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-box {
+
+    position: absolute;
+
+    top: 35px;
+    right: 35px;
+
+    padding: 18px 28px;
+
+    border: 1px solid #ff4d4d;
+
+    border-radius: 20px;
+
+    background: rgba(55,8,8,0.88);
+
+    box-shadow: 0 0 22px rgba(255,70,70,0.35);
+
+}
+
+.progress-box strong {
+
+    font-size: 24px;
+
+}
+
+
+/* =========================
+   KAD KUIZ
+========================= */
+
+.quiz-container {
+
+    width: 850px;
+
+    max-width: 90%;
+
+    margin: 45px auto 0;
+
+    padding: 40px;
+
+    border-radius: 28px;
+
+    background: rgba(48,6,6,0.90);
+
+    border: 1px solid #ff4d4d;
+
+    box-shadow: 0 0 35px rgba(255,70,70,0.30);
+
+    text-align: center;
+
+}
+
+#question {
+
+    font-size: 27px;
+
+    margin: 30px 0;
+
+}
+
+
+/* =========================
+   SOALAN
+========================= */
+
+.question-number {
+
+    display: inline-block;
+
+    padding: 12px 25px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        90deg,
+        #8b0000,
+        #c62828
+    );
+
+    color: #ffd6d6;
+
+    font-weight: bold;
+
+}
+
+
+/* =========================
+   PILIHAN JAWAPAN
+========================= */
+
+.answers {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+}
+
+.answer-btn {
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    border: 1px solid #ff4d4d;
+
+    background: rgba(85,10,10,0.92);
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+.answer-btn:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #ff8a8a;
+
+    box-shadow: 0 0 18px rgba(255,80,80,0.45);
+
+}
+
+
+/* =========================
+   BUTANG SETERUSNYA
+========================= */
+
+#next-btn {
+
+    margin-top: 30px;
+
+    padding: 15px 70px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #b71c1c;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+}
+
+#next-btn:hover {
+
+    background: #d32f2f;
+
+}
+
+
+/* =========================
+   PANEL KESUKARAN
+========================= */
+
+.difficulty-menu {
+
+    position: fixed;
+
+    left: 25px;
+
+    bottom: 25px;
+
+    width: 270px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background: rgba(55,8,8,0.90);
+
+    border: 1px solid #ff4d4d;
+
+}
+
+.difficulty-menu h3 {
+
+    margin-top: 0;
+
+}
+
+.difficulty-menu button {
+
+    display: block;
+
+    width: 100%;
+
+    margin: 8px 0;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ff4d4d;
+
+    background: #5b1111;
+
+    color: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+.difficulty-menu button:hover {
+
+    background: #8b1e1e;
+
+}
+
+
+/* =========================
+   PANEL INFO BAWAH
+========================= */
+
+.info-panel {
+
+    width: 850px;
+
+    max-width: 90%;
+
+    margin: 25px auto;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    gap: 20px;
+
+    border-radius: 20px;
+
+    background: rgba(48, 6, 6, 0.92);
+
+    border: 1px solid #ff4d4d;
+
+    box-shadow: 0 0 30px rgba(255,70,70,0.25);
+
+}
+
+.info-item {
+
+    flex: 1;
+
+    text-align: center;
+
+}
+
+.info-item h3 {
+
+    color: #ff6b6b;
+
+    margin-bottom: 5px;
+
+    text-shadow: 0 0 8px rgba(255,80,80,0.4);
+
+}
+
+.info-item p {
+
+    font-size: 14px;
+
+    color: #d8d8d8;
+
+    opacity: 0.85;
+
+}
+
+
+/* =========================
+   POPUP SAVE
+========================= */
+
+.save-box {
+
+    position: fixed;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 380px;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background: #3a0505;
+
+    border: 1px solid #ff4d4d;
+
+    text-align: center;
+
+    box-shadow: 0 0 40px rgba(255,70,70,0.35);
+
+    z-index: 10;
+
+}
+
+
+.save-box button {
+
+    padding: 12px 20px;
+
+    margin: 8px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .score-box,
+    .progress-box {
+
+        position: static;
+
+        width: fit-content;
+
+        margin: 15px auto;
+
+    }
+
+    .header {
+
+        padding-top: 20px;
+
+    }
+
+    .header h1 {
+
+        font-size: 36px;
+
+    }
+
+    .difficulty-menu {
+
+        position: static;
+
+        margin: 20px auto;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .answers {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .quiz-container {
+
+        padding: 25px 15px;
+
+    }
+
+    .info-panel {
+
+        flex-direction: column;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- MARKAH -->
+
+<div class="score-box">
+
+    <small>🏆 MARKAH</small>
+
+    <strong id="score">0</strong>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="progress-box">
+
+    <small>SOALAN</small>
+
+    <strong id="progress">1 / 10</strong>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <h1>🖥️ AI <span>Game</span></h1>
+
+    <p>Kuiz Perkakasan Komputer</p>
+
+</header>
+
+
+<!-- KUIZ -->
+
+<div class="quiz-container">
+
+
+    <div class="question-number" id="question-number">
+
+        Soalan 1 daripada 10
+
+    </div>
+
+
+    <h2 id="question">
+
+        Soalan akan muncul di sini
+
+    </h2>
+
+
+    <div class="answers" id="answers"></div>
+
+
+    <button id="next-btn"
+
+            onclick="nextQuestion()"
+
+            style="display:none;">
+
+        Seterusnya →
+
+    </button>
+
+
+    <div id="result"></div>
+
+
+</div>
+
+
+<!-- TAHAP KESUKARAN -->
+
+<div class="difficulty-menu">
+
+    <h3>📊 Tahap Kesukaran</h3>
+
+
+    <button onclick="changeDifficulty('https://madifanramlan.github.io/Hardware-Test-Easy/')">
+
+        🟢 Mudah
+
+    </button>
+
+
+    <button onclick="changeDifficulty('https://madifanramlan.github.io/Hardware-Test-Normal/')">
+
+        🔵 Sederhana
+
+    </button>
+
+
+    <button onclick="changeDifficulty('https://madifanramlan.github.io/Hardware-Test-Hard/')">
+
+        🔴 Sukar
+
+    </button>
+
+</div>
+
+
+<!-- PANEL INFO -->
+
+<div class="info-panel">
+
+
+    <div class="info-item">
+
+        <h3>💾 Progres Disimpan</h3>
+
+        <p>
+
+            Kemajuan permainan disimpan secara automatik.
+
+        </p>
+
+    </div>
+
+
+    <div class="info-item">
+
+        <h3>🔄 Sambung Semula</h3>
+
+        <p>
+
+            Teruskan permainan selepas halaman dimuat semula.
+
+        </p>
+
+    </div>
+
+
+    <div class="info-item">
+
+        <h3>⭐ 10 Soalan</h3>
+
+        <p>
+
+            Jawab semua soalan dan kumpulkan markah.
+
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- POPUP SAVE -->
+
+<div id="save-box"
+
+     class="save-box"
+
+     style="display:none;">
+
+
+    <h2>💾 Permainan Disimpan</h2>
+
+
+    <p>
+
+        Anda mempunyai permainan yang belum selesai.
+
+    </p>
+
+
+    <button onclick="continueGame()">
+
+        Sambung
+
+    </button>
+
+
+    <button onclick="newGame()">
+
+        Permainan Baharu
+
+    </button>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   SOALAN
+========================= */
+
+
+const questionBank = [
+
+{
+    question: "Saya mengandungi ALU, Control Unit, dan Register. Saya melaksanakan kitaran Fetch–Decode–Execute untuk memproses arahan serta berkomunikasi dengan RAM bagi mendapatkan data. Apakah saya?",
+    correct: "CPU",
+    wrong: ["GPU", "RAM", "Motherboard"]
+},
+
+{
+    question: "Saya menggunakan cakera magnetik yang berputar serta kepala baca/tulis untuk menyimpan data secara kekal. Kelajuan saya diukur dalam RPM. Apakah saya?",
+    correct: "Hard Disk Drive (HDD)",
+    wrong: ["Solid State Drive (SSD)", "RAM", "USB Flash Drive"]
+},
+
+{
+    question: "Saya menggunakan teknologi paparan seperti LCD, LED atau OLED untuk menghasilkan jutaan piksel yang membentuk imej pada skrin. Apakah saya?",
+    correct: "Monitor",
+    wrong: ["Projector", "Printer", "Television (TV)"]
+},
+
+{
+    question: "Saya menghantar isyarat input melalui matriks kekunci yang diimbas oleh pengawal untuk mengesan setiap tekanan kekunci. Apakah saya?",
+    correct: "Keyboard",
+    wrong: ["Mouse", "Numeric Keypad", "Touchpad"]
+},
+
+{
+    question: "Saya menggunakan sensor optik atau laser untuk mengesan pergerakan pada permukaan dan menukarkannya kepada koordinat kursor. Apakah saya?",
+    correct: "Mouse",
+    wrong: ["Touchpad", "Trackball", "Graphics Tablet"]
+},
+
+{
+    question: "Saya ialah memori yang bersifat volatile, menyimpan data yang boleh diakses terus oleh CPU dengan kelajuan tinggi. Kandungan saya akan hilang apabila bekalan kuasa diputuskan. Apakah saya?",
+    correct: "RAM",
+    wrong: ["Cache Memory", "ROM", "SSD"]
+},
+
+{
+    question: "Saya menukarkan arus AC daripada soket kepada beberapa voltan DC seperti 3.3V, 5V dan 12V untuk menghidupkan komponen komputer. Apakah saya?",
+    correct: "Power Supply Unit (PSU)",
+    wrong: ["Voltage Regulator", "Motherboard", "UPS"]
+},
+
+{
+    question: "Saya mempunyai beribu-ribu teras pemprosesan selari yang direka khas untuk rendering grafik, pengiraan AI dan pemprosesan visual berprestasi tinggi. Apakah saya?",
+    correct: "Graphics Processing Unit (GPU)",
+    wrong: ["CPU", "Neural Processing Unit (NPU)", "RAM"]
+},
+
+{
+    question: "Saya menghasilkan salinan fizikal menggunakan teknologi inkjet, laser atau thermal berdasarkan data digital daripada komputer. Apakah saya?",
+    correct: "Printer",
+    wrong: ["Photocopier", "Plotter", "Scanner"]
+},
+
+{
+    question: "Saya mempunyai alamat MAC unik dan bertanggungjawab menghantar serta menerima bingkai data melalui Ethernet atau Wi-Fi. Apakah saya?",
+    correct: "Network Interface Card (NIC)",
+    wrong: ["Router", "Switch", "Modem"]
+}
+
+];
+
+
+let questions = [];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+
+/* ACAK */
+
+function shuffle(array) {
+
+    return array.sort(() => Math.random() - 0.5);
+
+}
+
+
+/* SAVE */
+
+function saveGame() {
+
+    localStorage.setItem(
+
+        "quizSave",
+
+        JSON.stringify({
+
+            questions,
+
+            currentQuestion,
+
+            score
+
+        })
+
+    );
+
+}
+
+
+/* PAPAR SOALAN */
+
+function showQuestion() {
+
+    const current = questions[currentQuestion];
+
+
+    document.getElementById("question-number").innerHTML =
+
+        `Soalan ${currentQuestion + 1} daripada ${questions.length}`;
+
+
+    document.getElementById("progress").innerHTML =
+
+        `${currentQuestion + 1} / ${questions.length}`;
+
+
+    document.getElementById("score").innerHTML = score;
+
+
+    document.getElementById("question").innerHTML =
+
+        current.question;
+
+
+    const answers = shuffle([
+
+        current.correct,
+
+        ...current.wrong
+
+    ]);
+
+
+    const container = document.getElementById("answers");
+
+
+    container.innerHTML = "";
+
+
+    answers.forEach(answer => {
+
+
+        const button = document.createElement("button");
+
+
+        button.innerHTML = answer;
+
+
+        button.className = "answer-btn";
+
+
+        button.onclick = () =>
+
+            selectAnswer(
+
+                button,
+
+                answer,
+
+                current.correct
+
+            );
+
+
+        container.appendChild(button);
+
+    });
+
+
+    document.getElementById("next-btn").style.display = "none";
+
+}
+
+
+/* JAWAPAN */
+
+function selectAnswer(
+
+    button,
+
+    selected,
+
+    correct
+
+) {
+
+
+    const buttons =
+
+        document.querySelectorAll(".answer-btn");
+
+
+    buttons.forEach(btn => btn.disabled = true);
+
+
+    if (selected === correct) {
+
+        button.classList.add("correct");
+
+        score++;
+
+    }
+
+    else {
+
+        button.classList.add("wrong");
+
+
+        buttons.forEach(btn => {
+
+            if (btn.innerHTML === correct)
+
+                btn.classList.add("correct");
+
+        });
+
+    }
+
+
+    document.getElementById("score").innerHTML = score;
+
+
+    saveGame();
+
+
+    document.getElementById("next-btn").style.display =
+
+        "inline-block";
+
+}
+
+
+/* SETERUSNYA */
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+        saveGame();
+
+    }
+
+    else {
+
+        document.getElementById("question").innerHTML =
+
+            "🎉 Kuiz Tamat!";
+
+
+        document.getElementById("answers").innerHTML = "";
+
+
+        document.getElementById("next-btn").style.display =
+
+            "none";
+
+
+        document.getElementById("result").innerHTML =
+
+            `Markah Akhir: ${score} / ${questions.length}`;
+
+
+        localStorage.removeItem("quizSave");
+
+    }
+
+}
+
+
+/* PERMAINAN BAHARU */
+
+function newGame() {
+
+    localStorage.removeItem("quizSave");
+
+    document.getElementById("save-box").style.display = "none";
+
+    questions = shuffle([...questionBank]);
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    showQuestion();
+
+}
+
+
+/* SAMBUNG */
+
+function continueGame() {
+
+    const save = JSON.parse(
+
+        localStorage.getItem("quizSave")
+
+    );
+
+
+    questions = save.questions;
+
+    currentQuestion = save.currentQuestion;
+
+    score = save.score;
+
+
+    document.getElementById("save-box").style.display =
+
+        "none";
+
+
+    showQuestion();
+
+}
+
+
+/* TUKAR TAHAP */
+
+function changeDifficulty(file) {
+
+    window.location.href = file;
+
+}
+
+
+/* MULAKAN */
+
+if (localStorage.getItem("quizSave")) {
+
+    document.getElementById("save-box").style.display =
+
+        "block";
+
+}
+
+else {
+
+    newGame();
+
+}
+
+
+</script>
+
+</body>
+
+</html>
